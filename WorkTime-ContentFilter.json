@@ -1,0 +1,334 @@
+{
+  "workflow": {
+    "unique_name": "definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP",
+    "name": "StudyTime-ContentFilter",
+    "title": "StudyTime-ContentFilter",
+    "type": "generic.workflow",
+    "base_type": "workflow",
+    "variables": [
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "L_657525545596113462",
+          "scope": "local",
+          "name": "meraki-network-id",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01ML8HKS08RGU16OEfQSizgVq7uitAeAbvR",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "{\"blockedUrlCategories\":[\"meraki:contentFiltering/category/11\",\n \"meraki:contentFiltering/category/27\",\n \"meraki:contentFiltering/category/34\",\n \"meraki:contentFiltering/category/56\"]}",
+          "scope": "local",
+          "name": "StudyTimeCF",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01ML8OKL1SYLG39xS22JWrf2k0FOW5zTrQk",
+        "object_type": "variable_workflow"
+      },
+      {
+        "schema_id": "datatype.string",
+        "properties": {
+          "value": "USER_PROVIDED",
+          "scope": "local",
+          "name": "meraki-api-key",
+          "type": "datatype.string",
+          "is_required": false,
+          "is_invisible": false
+        },
+        "unique_name": "variable_workflow_01ML8HB88BOM00Adg1dzUXOWCW9fUJq5qyK",
+        "object_type": "variable_workflow"
+      }
+    ],
+    "properties": {
+      "atomic": {
+        "is_atomic": false
+      },
+      "delete_workflow_instance": false,
+      "description": "Workflow that will adjust Meraki Content Filter to policy suitable for study & work time.",
+      "display_name": "StudyTime-ContentFilter",
+      "runtime_user": {
+        "override_target_runtime_user": false,
+        "specify_on_workflow_start": false,
+        "target_default": true
+      },
+      "target": {
+        "target_type": "meraki.endpoint",
+        "target_id": "definition_target_01ML7D80HUAV80kmheECzpfQ5QtJXsvSPn2",
+        "execute_on_workflow_target": true
+      }
+    },
+    "object_type": "definition_workflow",
+    "actions": [
+      {
+        "unique_name": "definition_activity_01ML8KDOEWJUQ7QE2bEG2dI3AMcb0KVLqCo",
+        "name": "HTTP Request",
+        "title": "SetStudyTimeCF",
+        "type": "web-service.http_request",
+        "base_type": "activity",
+        "properties": {
+          "accept": "application/json",
+          "action_timeout": 180,
+          "allow_auto_redirect": true,
+          "body": "$workflow.definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP.local.variable_workflow_01ML8OKL1SYLG39xS22JWrf2k0FOW5zTrQk$",
+          "content_type": "application/json",
+          "continue_on_error_status_code": false,
+          "continue_on_failure": false,
+          "custom_headers": [
+            {
+              "name": "X-Cisco-Meraki-API-Key",
+              "value": "$workflow.definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP.local.variable_workflow_01ML8HB88BOM00Adg1dzUXOWCW9fUJq5qyK$"
+            }
+          ],
+          "description": "Set Study Time Content Filter",
+          "display_name": "SetStudyTimeCF",
+          "method": "PUT",
+          "relative_url": "/networks/$workflow.definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP.local.variable_workflow_01ML8HKS08RGU16OEfQSizgVq7uitAeAbvR$/appliance/contentFiltering",
+          "runtime_user": {
+            "override_target_runtime_user": false,
+            "target_default": true
+          },
+          "skip_execution": false,
+          "target": {
+            "override_workflow_target": true,
+            "target_id": "definition_target_01IL1ONVVAOOS1LmEiaRbqWTVcyiVESVYsh"
+          }
+        },
+        "object_type": "definition_activity"
+      }
+    ],
+    "categories": [
+      "category_01ML8GQ81M5TM1zpzsopmKIBp5OhUtCnXIW"
+    ]
+  },
+  "categories": {
+    "category_01ML8GQ81M5TM1zpzsopmKIBp5OhUtCnXIW": {
+      "unique_name": "category_01ML8GQ81M5TM1zpzsopmKIBp5OhUtCnXIW",
+      "name": "Meraki Content Filter",
+      "title": "Meraki Content Filter",
+      "type": "basic.category",
+      "base_type": "category",
+      "category_type": "custom",
+      "object_type": "category"
+    }
+  },
+  "triggers": {
+    "triggerschedule_01MM5K400Y1EN0P1CCZ7g3nZYS0GwgyoonW": {
+      "workflow_id": "definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP",
+      "name": "Sunday Lights Out",
+      "title": "",
+      "lowercase_name": "schedule.sunday_lights_out",
+      "type": "schedule",
+      "base_type": "trigger",
+      "ref_id": "schedule_01MLEGR1HZTWE2rLbGqcvBzcKYc38RfAdoL",
+      "version": "1.0.0",
+      "disabled": false,
+      "unique_name": "triggerschedule_01MM5K400Y1EN0P1CCZ7g3nZYS0GwgyoonW",
+      "object_type": "triggerschedule"
+    },
+    "triggerschedule_01MM5KCEDM9UL28eusFydJDup0adlm6pxZZ": {
+      "workflow_id": "definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP",
+      "name": "Monday Lights Out",
+      "title": "",
+      "lowercase_name": "schedule.monday_lights_out",
+      "type": "schedule",
+      "base_type": "trigger",
+      "ref_id": "schedule_01MLEHLZT9CHI51Zaz4ZlvcAw6y2zk36LsX",
+      "version": "1.0.0",
+      "disabled": false,
+      "unique_name": "triggerschedule_01MM5KCEDM9UL28eusFydJDup0adlm6pxZZ",
+      "object_type": "triggerschedule"
+    },
+    "triggerschedule_01MM5KMNHN3SM2Ja5KgruZyogkwzzWsZtdy": {
+      "workflow_id": "definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP",
+      "name": "Tuesday Lights Out",
+      "title": "",
+      "lowercase_name": "schedule.tuesday_lights_out",
+      "type": "schedule",
+      "base_type": "trigger",
+      "ref_id": "schedule_01MM5H60OULGE0LaOOPxT3NE8gSHaONFJlK",
+      "version": "1.0.0",
+      "disabled": false,
+      "unique_name": "triggerschedule_01MM5KMNHN3SM2Ja5KgruZyogkwzzWsZtdy",
+      "object_type": "triggerschedule"
+    },
+    "triggerschedule_01MM5KVIQ8GSG2KWAEcQ8x3K52huVTOyrbU": {
+      "workflow_id": "definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP",
+      "name": "Wednesday Lights Out",
+      "title": "",
+      "lowercase_name": "schedule.wednesday_lights_out",
+      "type": "schedule",
+      "base_type": "trigger",
+      "ref_id": "schedule_01MM5HU1PRA291VFNn4g8EdZG0haZWTk4he",
+      "version": "1.0.0",
+      "disabled": false,
+      "unique_name": "triggerschedule_01MM5KVIQ8GSG2KWAEcQ8x3K52huVTOyrbU",
+      "object_type": "triggerschedule"
+    },
+    "triggerschedule_01MM5L3K2PQRW4J9OMN0zEIm0YIUl3g5lV3": {
+      "workflow_id": "definition_workflow_01ML8F4DJ2JRM1pThIG8g2B2Dc73d61N6cP",
+      "name": "Thursday Lights Out",
+      "title": "",
+      "lowercase_name": "schedule.thursday_lights_out",
+      "type": "schedule",
+      "base_type": "trigger",
+      "ref_id": "schedule_01MM5IFMZZEWA7gsD9pZsF8cgzlgQJsLV1r",
+      "version": "1.0.0",
+      "disabled": false,
+      "unique_name": "triggerschedule_01MM5L3K2PQRW4J9OMN0zEIm0YIUl3g5lV3",
+      "object_type": "triggerschedule"
+    }
+  },
+  "schedules": {
+    "schedule_01MLEGR1HZTWE2rLbGqcvBzcKYc38RfAdoL": {
+      "unique_name": "schedule_01MLEGR1HZTWE2rLbGqcvBzcKYc38RfAdoL",
+      "name": "Sunday Lights Out",
+      "description": "Sunday 10:00pm PST",
+      "type": "basic.schedule",
+      "base_type": "schedule",
+      "properties": {
+        "calendar": "calendar_recurring_1BMfMfZOtVKaTB6BaLDrNQK52Fc",
+        "timezone": "US/Pacific",
+        "starttime": "22:00",
+        "interval_hours": 0,
+        "interval_minutes": 0,
+        "number_of_times": 1,
+        "display_name": "Sunday Lights Out",
+        "description": "Sunday 10:00pm PST"
+      },
+      "version": "1.0.0",
+      "object_type": "schedule"
+    },
+    "schedule_01MLEHLZT9CHI51Zaz4ZlvcAw6y2zk36LsX": {
+      "unique_name": "schedule_01MLEHLZT9CHI51Zaz4ZlvcAw6y2zk36LsX",
+      "name": "Monday Lights Out",
+      "description": "Monday 10:00pm PST",
+      "type": "basic.schedule",
+      "base_type": "schedule",
+      "properties": {
+        "calendar": "calendar_recurring_1BMfMeHT9BLcMorjZ6d827zXeaV",
+        "timezone": "US/Pacific",
+        "starttime": "22:00",
+        "interval_hours": 0,
+        "interval_minutes": 0,
+        "number_of_times": 1,
+        "display_name": "Monday Lights Out",
+        "description": "Monday 10:00pm PST"
+      },
+      "version": "1.0.0",
+      "object_type": "schedule"
+    },
+    "schedule_01MM5H60OULGE0LaOOPxT3NE8gSHaONFJlK": {
+      "unique_name": "schedule_01MM5H60OULGE0LaOOPxT3NE8gSHaONFJlK",
+      "name": "Tuesday Lights Out",
+      "description": "Tuesday 10:00pm PST",
+      "type": "basic.schedule",
+      "base_type": "schedule",
+      "properties": {
+        "calendar": "calendar_recurring_1BMfMhDJAkJOyFHVPdAlXhGhG4r",
+        "timezone": "US/Pacific",
+        "starttime": "22:00",
+        "interval_hours": 0,
+        "interval_minutes": 0,
+        "number_of_times": 1,
+        "display_name": "Tuesday Lights Out",
+        "description": "Tuesday 10:00pm PST"
+      },
+      "version": "1.0.0",
+      "object_type": "schedule"
+    },
+    "schedule_01MM5HU1PRA291VFNn4g8EdZG0haZWTk4he": {
+      "unique_name": "schedule_01MM5HU1PRA291VFNn4g8EdZG0haZWTk4he",
+      "name": "Wednesday Lights Out",
+      "description": "Wednesday 10:00pm PST",
+      "type": "basic.schedule",
+      "base_type": "schedule",
+      "properties": {
+        "calendar": "calendar_recurring_1BMfMqhskK5gwxWWa4onJC9Zr85",
+        "timezone": "US/Pacific",
+        "starttime": "22:00",
+        "interval_hours": 0,
+        "interval_minutes": 0,
+        "number_of_times": 1,
+        "display_name": "Wednesday Lights Out",
+        "description": "Wednesday 10:00pm PST"
+      },
+      "version": "1.0.0",
+      "object_type": "schedule"
+    },
+    "schedule_01MM5IFMZZEWA7gsD9pZsF8cgzlgQJsLV1r": {
+      "unique_name": "schedule_01MM5IFMZZEWA7gsD9pZsF8cgzlgQJsLV1r",
+      "name": "Thursday Lights Out",
+      "description": "Thursday  10:00pm PST",
+      "type": "basic.schedule",
+      "base_type": "schedule",
+      "properties": {
+        "calendar": "calendar_recurring_1BMfMd3fofpISGMRps4BWyiLLLF",
+        "timezone": "US/Pacific",
+        "starttime": "22:00",
+        "interval_hours": 0,
+        "interval_minutes": 0,
+        "number_of_times": 1,
+        "display_name": "Thursday Lights Out",
+        "description": "Thursday  10:00pm PST"
+      },
+      "version": "1.0.0",
+      "object_type": "schedule"
+    }
+  },
+  "targets": {
+    "definition_target_01IL1ONVVAOOS1LmEiaRbqWTVcyiVESVYsh": {
+      "unique_name": "definition_target_01IL1ONVVAOOS1LmEiaRbqWTVcyiVESVYsh",
+      "name": "meraki-api-base-url",
+      "title": "meraki-api-base-url",
+      "type": "web-service.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "disable_certificate_validation": false,
+        "display_name": "meraki-api-base-url",
+        "host": "api.meraki.com",
+        "ignore_proxy": false,
+        "no_runtime_user": true,
+        "path": "/api/v1",
+        "protocol": "https"
+      }
+    },
+    "definition_target_01ML7D80HUAV80kmheECzpfQ5QtJXsvSPn2": {
+      "unique_name": "definition_target_01ML7D80HUAV80kmheECzpfQ5QtJXsvSPn2",
+      "name": "Maine-Meraki-Network",
+      "title": "Maine-Meraki-Network",
+      "type": "meraki.endpoint",
+      "base_type": "target",
+      "object_type": "definition_target",
+      "properties": {
+        "default_runtime_user_id": "definition_runtime_user_01MJPOLXLTUYT4ci5Bu94NQJ1MT1H5U5QxB",
+        "display_name": "Maine-Meraki-Network",
+        "host": "api.meraki.com",
+        "ignore_proxy": false,
+        "port": 443,
+        "protocol": "https"
+      }
+    }
+  },
+  "runtime_users": {
+    "definition_runtime_user_01MJPOLXLTUYT4ci5Bu94NQJ1MT1H5U5QxB": {
+      "unique_name": "definition_runtime_user_01MJPOLXLTUYT4ci5Bu94NQJ1MT1H5U5QxB",
+      "name": "Meraki API Key",
+      "title": "Meraki API Key",
+      "type": "runtime_user.meraki_credentials",
+      "base_type": "runtime_user",
+      "object_type": "definition_runtime_user",
+      "properties": {
+        "api_key": "*****",
+        "display_name": "Meraki API Key"
+      }
+    }
+  }
+}
